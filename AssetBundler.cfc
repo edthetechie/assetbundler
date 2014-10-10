@@ -110,8 +110,9 @@
             // build the bundle file path with the md5 hash of the file's contents
             // this method ensures that browsers do not cache old versions of the .js or .css
             loc.bundleFilePath = ExpandPath(loc.relativeFolderPath & arguments.bundle & "-" & loc.bundleInfo.md5hash & loc.extension);
-
-            $file(action="write", file=loc.bundleFilePath, output=loc.bundleContents, mode="644");
+            
+            myFile = loc.bundleFilePath; data = loc.bundleContents; FileWrite(myFile, data);
+            //$file(action="write", file=loc.bundleFilePath, output=loc.bundleContents, mode="644");
         </cfscript>
         <cfreturn />
     </cffunction>
@@ -268,7 +269,7 @@
                     $throw(type="Wheels.AssetFileNotFound", message="Could not find the file '#loc.itemRelativePath#'.", extendedInfo="Create a file named '#loc.array[i]##arguments.extension#' in the '#arguments.relativeFolderPath#' directory (create the directory as well if it doesn't already exist).");
 
                 // get each of our files and concantenate them together
-                loc.file = $file(action="read", file=loc.itemFilePath);
+                loc.file = fileRead(loc.itemFilePath);
                 loc.fileContents = loc.fileContents & loc.file;
             }
 
